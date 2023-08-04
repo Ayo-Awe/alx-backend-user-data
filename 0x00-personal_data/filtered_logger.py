@@ -67,3 +67,33 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return mysql.connector.connect(user=username, password=password,
                                    host=host,
                                    database=db_name)
+
+
+def main() -> None:
+    """Logs all users
+    """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute(
+        "SELECT name,\
+                email,\
+                phone, \
+                ssn, \
+                password,\
+                ip,\
+                last_login, \
+                user_agent\
+                FROM users;")
+    logger = get_logger()
+
+    for row in cursor:
+        message = "name={}; email={}; phone={}; ssn={};\
+password={}; ip={}; last_login={}; user_agent={};".format(*row)
+        logger.info(message)
+
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
