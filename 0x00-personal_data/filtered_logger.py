@@ -20,9 +20,9 @@ def filter_datum(fields: List[str], redaction: str,
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class"""
 
-    REDACTION: str = "***"
-    FORMAT: str = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
-    SEPARATOR: str = ";"
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
 
     def __init__(self, fields: List[str]) -> None:
         """Constructor"""
