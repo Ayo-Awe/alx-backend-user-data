@@ -14,7 +14,7 @@ def filter_datum(fields: List[str], redaction: str,
     """Uses a regex to replace occurrences of certain field values"""
     pattern = r"({}=)([^{}]*)({})".format(
         "(?:{})".format("|".join(fields)), separator, separator)
-    # return re.sub(pattern, r"\1{}\3".format(redaction), message)
+    return re.sub(pattern, r"\1{}\3".format(redaction), message)
 
 
 class RedactingFormatter(logging.Formatter):
