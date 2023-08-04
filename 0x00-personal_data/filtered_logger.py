@@ -5,7 +5,7 @@ alx personal data task in the alx backend specialisation
 """
 
 import logging
-from typing import List, Tuple
+from typing import List
 import re
 
 
@@ -14,7 +14,7 @@ def filter_datum(fields: List[str], redaction: str,
     """Uses a regex to replace occurrences of certain field values"""
     pattern = r"({}=)([^{}]*)({})".format(
         "(?:{})".format("|".join(fields)), separator, separator)
-    return re.sub(pattern, r"\1{}\3".format(redaction), message)
+    # return re.sub(pattern, r"\1{}\3".format(redaction), message)
 
 
 class RedactingFormatter(logging.Formatter):
@@ -33,3 +33,4 @@ class RedactingFormatter(logging.Formatter):
         """Formats the redacted logs"""
         record.msg = filter_datum(self.fields, self.REDACTION,
                                   record.getMessage(), self.SEPARATOR)
+        return super().format(record)
