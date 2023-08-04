@@ -5,7 +5,7 @@ alx personal data task in the alx backend specialisation
 """
 
 import logging
-from typing import List, Union, Dict
+from typing import List, Tuple
 import re
 
 
@@ -30,7 +30,7 @@ class RedactingFormatter(logging.Formatter):
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
         if len(kwargs) > 0 and "fields" in kwargs:
-            self.__fields = kwargs["fields"]
+            self.__fields: Tuple[str] = kwargs["fields"]
 
     def format(self, record: logging.LogRecord) -> str:
         """Formats the redacted logs"""
