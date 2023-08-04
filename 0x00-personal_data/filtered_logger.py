@@ -4,8 +4,8 @@
 alx personal data task in the alx backend specialisation
 """
 
-import logging
 from typing import List
+import logging
 import re
 
 
@@ -32,7 +32,7 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """Formats the redacted logs"""
-        message = super(RedactingFormatter, self).format(record)
-        redacted = filter_datum(self.fields, self.REDACTION,
-                                message, self.SEPARATOR)
-        return redacted
+        message = super().format(record)
+        redacted_log = filter_datum(
+            self.fields, self.REDACTION, message, self.SEPARATOR)
+        return redacted_log
