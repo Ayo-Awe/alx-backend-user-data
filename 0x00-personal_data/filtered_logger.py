@@ -5,7 +5,7 @@ alx personal data task in the alx backend specialisation
 """
 
 import logging
-from typing import List, Tuple
+from typing import List, Union, Dict
 import re
 
 
@@ -25,13 +25,15 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: Tuple[str]) -> None:
+    def __init__(self, **kwargs: any) -> None:
         """Constructor"""
         super(RedactingFormatter, self).__init__(self.FORMAT)
-        self.__fields = fields
+
+        if len(kwargs) > 0 and "fields" in kwargs:
+            self.__fields = kwargs["fields"]
 
     def format(self, record: logging.LogRecord) -> str:
         """Formats the redacted logs"""
-        record.msg = filter_datum(
+        record.msg: str = filter_datum(
             list(self.__fields), self.REDACTION, "; ".join(record.msg.split(";")), self.SEPARATOR)
         return super().format(record)
