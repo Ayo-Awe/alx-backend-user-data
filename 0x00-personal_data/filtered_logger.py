@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""This module contains code for the
+alx personal data task in the alx backend specialisation
+"""
+
 from typing import List
 import re
 
