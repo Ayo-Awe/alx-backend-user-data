@@ -32,8 +32,8 @@ class RedactingFormatter(logging.Formatter):
         if len(kwargs) > 0 and "fields" in kwargs:
             self.__fields: Tuple[str] = kwargs["fields"]
 
-    def format(self, record: logging.LogRecord) -> str:
-        """Formats the redacted logs"""
-        record.msg: str = filter_datum(
-            list(self.__fields), self.REDACTION, "; ".join(record.msg.split(";")), self.SEPARATOR)
-        return super().format(record)
+    # def format(self, record: logging.LogRecord) -> str:
+    #     """Formats the redacted logs"""
+    #     record.msg: str = filter_datum(
+    #         list(self.__fields), self.REDACTION, "; ".join(record.msg.split(";")), self.SEPARATOR)
+    #     return super().format(record)
