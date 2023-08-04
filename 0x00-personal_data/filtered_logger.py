@@ -21,16 +21,16 @@ class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
         """
 
-    REDACTION = "***"
-    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
-    SEPARATOR = ";"
+    REDACTION: str = "***"
+    FORMAT: str = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR: str = ";"
 
-    # def __init__(self, **kwargs: any) -> None:
-    #     """Constructor"""
-    #     super(RedactingFormatter, self).__init__(self.FORMAT)
+    def __init__(self, **kwargs: any) -> None:
+        """Constructor"""
+        super(RedactingFormatter, self).__init__(self.FORMAT)
 
-    #     if len(kwargs) > 0 and "fields" in kwargs:
-    #         self.__fields: Tuple[str] = kwargs["fields"]
+        if len(kwargs) > 0 and "fields" in kwargs:
+            self.__fields: Tuple[str] = kwargs["fields"]
 
     def format(self, record: logging.LogRecord) -> str:
         """Formats the redacted logs"""
