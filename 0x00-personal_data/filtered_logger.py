@@ -43,8 +43,7 @@ class RedactingFormatter(logging.Formatter):
 def get_logger() -> logging.Logger:
     """Returns a new logger
     """
-    logger = logging.Logger("user_data", logging.INFO)
-    logger.name = "user_data"
+    logger = logging.Logger(name="user_data", level=logging.INFO)
     logger.propagate = False
     logger.setLevel(logging.INFO)
 
