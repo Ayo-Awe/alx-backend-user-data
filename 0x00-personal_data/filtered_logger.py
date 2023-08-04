@@ -29,10 +29,10 @@ class RedactingFormatter(logging.Formatter):
         """Constructor"""
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
-        self.__fields = fields
+        self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
         """Formats the redacted logs"""
         record.msg: str = filter_datum(
-            list(self.__fields), self.REDACTION, record.getMessage(), self.SEPARATOR)
+            list(self.fields), self.REDACTION, record.getMessage(), self.SEPARATOR)
         return super().format(record)
