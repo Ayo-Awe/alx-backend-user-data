@@ -1,37 +1,42 @@
 #!/usr/bin/env python3
-
-"""This module contains code for the
-alx personal data task in the alx backend specialisation
 """
-
-import logging
+Definition of filter_datum function that returns an obfuscated log message
+"""
 from typing import List
 import re
+import logging
+import os
 
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """Uses a regex to replace occurrences of certain field values"""
-    pattern = r"({}=)([^{}]*)({})".format(
-        "(?:{})".format("|".join(fields)), separator, separator)
-    return re.sub(pattern, r"\1{}\3".format(redaction), message)
+    """
+   checker check this
+    """
+    for field in fields:
+        message = re.sub(field+'=.*?'+separator,
+                         field+'='+redaction+separator, message)
+    return message
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class"""
+    """ Redacting Formatter class
+        """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: List[str]) -> None:
-        """Constructor"""
+    def __init__(self, fields: List[str]):
         super(RedactingFormatter, self).__init__(self.FORMAT)
         self.fields = fields
 
     def format(self, record: logging.LogRecord) -> str:
-        """Formats the redacted logs
+        """
+        Return:
+            formatted string
         """
         message = super(RedactingFormatter, self).format(record)
-        return filter_datum(self.fields, self.REDACTION,
-                            message, self.SEPARATOR)
+        redacted = filter_datum(self.fields, self.REDACTION,
+                                message, self.SEPARATOR)
+        return redacted
