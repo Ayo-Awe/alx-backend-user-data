@@ -21,8 +21,11 @@ class Auth:
         return tolerant_path not in excluded_paths
 
     def authorization_header(self, request=None) -> str:
-        """to be update"""
-        return None
+        """Returns the value of the Authorization header"""
+        if request is None:
+            return None
+
+        return request.headers.get("Authorization")
 
     def current_user(self, request=None) -> TypeVar('User'):
         """to be update"""
