@@ -6,6 +6,7 @@ of the auth class
 
 from flask import request
 from typing import List, TypeVar
+import re
 
 
 class Auth:
@@ -18,7 +19,16 @@ class Auth:
 
         tolerant_path = path if path[-1] == "/" else path+"/"
 
-        return tolerant_path not in excluded_paths
+        for ep in excluded_paths:
+            pre_star = ep[:-1] if ep.endswith("*") else None
+
+            if pre_star is not None and tolerant_path.startswith(pre_star):
+                return False
+
+            if ep == tolerant_path:
+                return False
+
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Returns the value of the Authorization header"""
