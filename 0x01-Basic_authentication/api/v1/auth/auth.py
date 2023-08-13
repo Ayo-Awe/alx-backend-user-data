@@ -12,8 +12,13 @@ class Auth:
     """Auth Class"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """to be updated"""
-        return False
+        """Returns true if a path requires authentication"""
+        if path is None or excluded_paths is None:
+            return True
+
+        tolerant_path = path if path[-1] == "/" else path+"/"
+
+        return tolerant_path not in excluded_paths
 
     def authorization_header(self, request=None) -> str:
         """to be update"""
