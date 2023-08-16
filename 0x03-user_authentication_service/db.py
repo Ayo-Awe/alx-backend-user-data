@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from typing import Union
 
 from user import Base, User
 
@@ -40,5 +41,15 @@ class DB:
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
         self._session.commit()
+
+        return user
+
+    def find_user_by(self, **kwargs) -> Union[User, None]:
+        """Finds and returns the first user that matches the set
+        of filters provided in the keyword arguments
+        """
+
+        session = self._session
+        user = session.query(User).filter_by(**kwargs).one()
 
         return user
