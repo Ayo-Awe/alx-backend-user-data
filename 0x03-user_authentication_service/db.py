@@ -6,7 +6,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from typing import Union
 
 from user import Base, User
 
@@ -44,7 +43,7 @@ class DB:
 
         return user
 
-    def find_user_by(self, **kwargs) -> Union[User, None]:
+    def find_user_by(self, **kwargs) -> User:
         """Finds and returns the first user that matches the set
         of filters provided in the keyword arguments
         """
