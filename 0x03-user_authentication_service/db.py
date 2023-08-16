@@ -52,3 +52,17 @@ class DB:
         user = session.query(User).filter_by(**kwargs).one()
 
         return user
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Finds and updates a user by id
+        """
+        session = self._session
+        user = self.find_user_by(id=user_id)
+
+        for key, value in kwargs.items():
+            if key not in dir(user):
+                raise ValueError()
+            user.__setattr__(key, value)
+
+        session.add(user)
+        session.commit()
