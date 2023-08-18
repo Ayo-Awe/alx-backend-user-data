@@ -4,6 +4,7 @@
 the user auth service in python
 """
 from flask import Flask, jsonify, abort, request, make_response, redirect
+import flask
 from auth import Auth
 # from flask_cors import (CORS, cross_origin)
 
@@ -41,7 +42,7 @@ def login():
     is_credentials_valid = auth.valid_login(body["email"], body["password"])
 
     if not is_credentials_valid:
-        abort(401)
+        flask.abort(401)
 
     session_id = auth.create_session(body["email"])
     response = jsonify({"email": body["email"], "message": "logged in"})
