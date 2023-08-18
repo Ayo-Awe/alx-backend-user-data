@@ -15,14 +15,14 @@ auth = Auth()
 
 
 @app.route("/", methods=["GET"], strict_slashes=False)
-def index():
+def index() -> str:
     """index route handler"""
 
     return jsonify({"message": "Bienvenue"})
 
 
 @app.route("/users", methods=["POST"], strict_slashes=False)
-def register_user():
+def register_user() -> str:
     """Registers a new user"""
 
     body = request.form
@@ -35,7 +35,7 @@ def register_user():
 
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
-def login():
+def login() -> str:
     """Login an existing user"""
 
     body = request.form
@@ -52,11 +52,11 @@ def login():
     response = jsonify({"email": body["email"], "message": "logged in"})
     response.set_cookie("session_id", session_id)
 
-    return response
+    return response, 200
 
 
 @app.route("/sessions", methods=['DELETE'], strict_slashes=False)
-def logout():
+def logout() -> str:
     """Sign out from current session"""
 
     session_id = request.cookies.get("session_id")
@@ -78,7 +78,7 @@ def logout():
 
 
 @app.route("/profile", methods=['GET'], strict_slashes=False)
-def profile():
+def profile() -> str:
     """Returns the profile of the logged in
     user
     """
@@ -93,7 +93,7 @@ def profile():
     if user is None:
         abort(403)
 
-    return jsonify({"email": user.email})
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":
