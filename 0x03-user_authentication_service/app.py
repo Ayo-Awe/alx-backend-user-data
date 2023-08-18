@@ -127,8 +127,6 @@ def update_password() -> str:
 
     if new_password is None or email is None or reset_token is None:
         abort(403)
-
-    print("here")
     try:
         AUTH.update_password(reset_token, new_password)
     except ValueError:
