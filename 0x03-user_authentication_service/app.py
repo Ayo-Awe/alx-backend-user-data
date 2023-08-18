@@ -67,7 +67,10 @@ def logout():
 
     auth.destroy_session(user.id)
 
-    return redirect("/")
+    res = redirect("/")
+    res.set_cookie("session_id", "", expires=0)
+
+    return res
 
 
 if __name__ == "__main__":
