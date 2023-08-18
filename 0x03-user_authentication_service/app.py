@@ -3,7 +3,7 @@
 """This module contains code for
 the user auth service in python
 """
-from flask import Flask, jsonify, abort, request, make_response
+from flask import Flask, jsonify, abort, request, make_response, redirect
 from auth import Auth
 # from flask_cors import (CORS, cross_origin)
 
@@ -48,6 +48,25 @@ def login():
     response.set_cookie("session_id", session_id)
 
     return response
+
+
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout():
+    """Sign out from current session"""
+
+    session_id = request.cookies.get("session_id")
+
+    if session_id is None:
+        abort(403)
+
+    user = auth.get_user_from_session_id(session_id)
+
+    if user is None:
+        abort(403)
+
+    auth.destroy_session(user.id)
+
+    return redirect("/")
 
 
 if __name__ == "__main__":

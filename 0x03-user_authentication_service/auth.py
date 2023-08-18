@@ -69,3 +69,24 @@ class Auth:
             return None
 
         return session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """Returns the user associated with a particular
+        session
+        """
+
+        if session_id is None:
+            return None
+
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except NoResultFound:
+            return None
+
+    def destroy_session(self, user_id=int) -> None:
+        """Updates the session_id of the
+        associated user to None
+        """
+
+        self._db.update_user(user_id, session_id=None)
