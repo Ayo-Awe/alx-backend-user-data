@@ -36,12 +36,13 @@ def register_user():
 
 @app.route("/sessions", methods=["POST"], strict_slashes=False)
 def login():
-    """Login an existing user"""
+    """Login an existing user
+    """
 
     body = request.form
     is_credentials_valid = auth.valid_login(body["email"], body["password"])
 
-    if not is_credentials_valid:
+    if is_credentials_valid == False:
         flask.abort(401)
 
     session_id = auth.create_session(body["email"])
@@ -56,9 +57,6 @@ def logout():
     """Sign out from current session"""
 
     session_id = request.cookies.get("session_id")
-
-    if session_id is None:
-        abort(403)
 
     user = auth.get_user_from_session_id(session_id)
 
