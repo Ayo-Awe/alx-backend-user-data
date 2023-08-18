@@ -10,7 +10,7 @@ from auth import Auth
 
 
 app = Flask(__name__)
-auth = Auth()
+AUTH = Auth()
 # CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
 
@@ -28,7 +28,7 @@ def register_user() -> str:
     body = request.form
 
     try:
-        user = auth.register_user(body["email"], body["password"])
+        user = AUTH.register_user(body["email"], body["password"])
         return jsonify({"email": user.email, "message": "user created"})
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
@@ -43,12 +43,12 @@ def login() -> str:
     if body["email"] is None or body["password"] is None:
         flask.abort(401)
 
-    is_credentials_valid = auth.valid_login(body["email"], body["password"])
+    is_credentials_valid = AUTH.valid_login(body["email"], body["password"])
 
     if not is_credentials_valid:
         flask.abort(401)
 
-    session_id = auth.create_session(body["email"])
+    session_id = AUTH.create_session(body["email"])
     response = jsonify({"email": body["email"], "message": "logged in"})
     response.set_cookie("session_id", session_id)
 
@@ -64,12 +64,12 @@ def logout() -> str:
     if session_id is None:
         abort(403)
 
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
 
     if user is None:
         abort(403)
 
-    auth.destroy_session(user.id)
+    AUTH.destroy_session(user.id)
 
     res = redirect("/")
     res.set_cookie("session_id", "", expires=0)
@@ -88,7 +88,7 @@ def profile() -> str:
     if session_id is None:
         abort(403)
 
-    user = auth.get_user_from_session_id(session_id)
+    user = AUTH.get_user_from_session_id(session_id)
 
     if user is None:
         abort(403)
